@@ -60,7 +60,7 @@ for i in range(1, end_page + 1):
         game_valueFormated = float(game_valueComplet) / 100
 
         # Post to api
-        response = requests.post(os.environ.get('API_URL'), json={
+        response = requests.post("https://gamesbusca-api.onrender.com/games", json={
             "game_name": f"{game_name}", 
             "game_eneba_url": f"{game_url}", 
             "game_image_url": f"{image_url}", 
