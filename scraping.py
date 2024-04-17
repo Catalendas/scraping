@@ -12,8 +12,8 @@ url = 'https://www.eneba.com/br/store/all?drms[]=xbox&page=1&regions[]=argentina
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"}
 
-con = sqlite3.connect("../eneba-api/prisma/dev.db")
-cur = con.cursor()
+# con = sqlite3.connect("../eneba-api/prisma/dev.db")
+# cur = con.cursor()
 
 site = requests.get(url, headers=headers)
 soup = BeautifulSoup(site.content, 'html.parser')
