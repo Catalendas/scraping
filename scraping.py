@@ -34,8 +34,14 @@ for i in range(1, end_page + 1):
         game_name = produto.find('span', class_=re.compile('YLosEL')).get_text().strip()
         image_url = produto.find('img', class_=re.compile('v5wuNi'))["src"]
         game_url = produto.find('a', class_=re.compile('oSVLlh'))["href"]
-        game_value = produto.find('span', class_=re.compile('L5ErLT')).get_text().strip()
+        game_value_search = produto.find('span', class_=re.compile('L5ErLT'))
+        if game_value_search:
+            game_value = game_value_search.get_text().strip()
+        else:
+            game_value = '0'
         game_isActive = produto.find('span', class_=re.compile('kq4D4Y'))
+        game_country = produto.find("div", class_=re.compile('Pm6lW1')).get_text().strip()
+        print(f"nome do jogo: {game_name}")
 
         # Format value
         game_valueNumber = re.findall(r'\d', game_value)
@@ -47,7 +53,8 @@ for i in range(1, end_page + 1):
         gameSoup = BeautifulSoup(game.content, "html.parser")
         # game_description = gameSoup.find("div", class_=re.compile('Wz6WhX'))
         game_category = gameSoup.find_all("li", class_=re.compile('Akwlh_'))
-        game_country = gameSoup.find("strong", class_=re.compile('cEhl9f')).get_text().strip()
+        print(f"pais do jogo: {game_country}")
+        print(f"Jogo está ativo?: {game_isActive}")
         list_category = []
 
         for category in game_category:
@@ -60,7 +67,7 @@ for i in range(1, end_page + 1):
         game_valueFormated = float(game_valueComplet) / 100
 
         # Post to api
-        response = requests.post("https://gamesbusca-api.onrender.com/games", json={
+        response = requests.post("http://localhost:3333/games", json={
             "game_name": f"{game_name}", 
             "game_eneba_url": f"{game_url}", 
             "game_image_url": f"{image_url}", 
