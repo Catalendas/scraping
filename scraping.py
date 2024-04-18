@@ -18,6 +18,7 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 site = requests.get(url, headers=headers)
 soup = BeautifulSoup(site.content, 'html.parser')
 qtd_itens = soup.find('span', class_='n1DQi7').get_text().strip()
+# print(qtd_itens)
 
 end_page = math.ceil(int(qtd_itens) / 20)
 
@@ -41,7 +42,7 @@ for i in range(1, end_page + 1):
             game_value = '0'
         game_isActive = produto.find('span', class_=re.compile('kq4D4Y'))
         game_country = produto.find("div", class_=re.compile('Pm6lW1')).get_text().strip()
-        print(f"nome do jogo: {game_name}")
+        # print(f"nome do jogo: {game_name}")
 
         # Format value
         game_valueNumber = re.findall(r'\d', game_value)
@@ -53,8 +54,8 @@ for i in range(1, end_page + 1):
         gameSoup = BeautifulSoup(game.content, "html.parser")
         # game_description = gameSoup.find("div", class_=re.compile('Wz6WhX'))
         game_category = gameSoup.find_all("li", class_=re.compile('Akwlh_'))
-        print(f"pais do jogo: {game_country}")
-        print(f"Jogo está ativo?: {game_isActive}")
+        # print(f"pais do jogo: {game_country}")
+        # print(f"Jogo está ativo?: {game_isActive}")
         list_category = []
 
         for category in game_category:
@@ -67,7 +68,7 @@ for i in range(1, end_page + 1):
         game_valueFormated = float(game_valueComplet) / 100
 
         # Post to api
-        response = requests.post("http://localhost:3333/games", json={
+        response = requests.post("https://gamesbusca-api.onrender.com/games", json={
             "game_name": f"{game_name}", 
             "game_eneba_url": f"{game_url}", 
             "game_image_url": f"{image_url}", 
