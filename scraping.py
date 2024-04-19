@@ -42,7 +42,7 @@ for i in range(1, end_page + 1):
             game_value = '0'
         game_isActive = produto.find('span', class_=re.compile('kq4D4Y'))
         game_country = produto.find("div", class_=re.compile('Pm6lW1')).get_text().strip()
-        # print(f"nome do jogo: {game_name}")
+        print(f"nome do jogo: {game_name}")
 
         # Format value
         game_valueNumber = re.findall(r'\d', game_value)
@@ -59,13 +59,17 @@ for i in range(1, end_page + 1):
         list_category = []
 
         for category in game_category:
-            item = category.find('a', class_=re.compile('BGWKEB')).get_text()
-            list_category.append(item)
+            item = category.find('a', class_=re.compile('BGWKEB'))
+
+            if item:
+                category_game = item.text
+            else: 
+                category_game = ""    
+            list_category.append(category_game)
 
         # Format game_value
-        game_valueNumber = re.findall(r'\d', game_value)
-        game_valueComplet = ''.join(game_valueNumber)
-        game_valueFormated = float(game_valueComplet) / 100
+        print(f"Valor do jogo: {game_value}")
+        print(f"Valor formatado: {game_valueFormated}")
 
         # Post to api
         response = requests.post("https://gamesbusca-api.onrender.com/games", json={
