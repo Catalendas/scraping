@@ -54,9 +54,11 @@ for i in range(1, end_page + 1):
         gameSoup = BeautifulSoup(game.content, "html.parser")
         # game_description = gameSoup.find("div", class_=re.compile('Wz6WhX'))
         game_category = gameSoup.find_all("li", class_=re.compile('Akwlh_'))
+        game_plataform = gameSoup.find("ul", class_=re.compile('oBo9oN'))
         # print(f"pais do jogo: {game_country}")
         # print(f"Jogo está ativo?: {game_isActive}")
         list_category = []
+        plataform_name = []
 
         for category in game_category:
             item = category.find('a', class_=re.compile('BGWKEB'))
@@ -64,23 +66,28 @@ for i in range(1, end_page + 1):
             if item:
                 category_game = item.text
             else: 
-                category_game = ""    
+                category_game = "Nenhuma"    
             list_category.append(category_game)
+
+        for plataform in game_plataform:
+            plataform_name.append(plataform.text)
 
         # Format game_value
         print(f"Valor do jogo: {game_value}")
         print(f"Valor formatado: {game_valueFormated}")
 
         # Post to api
-        response = requests.post("https://gamesbusca-api.onrender.com/games", json={
-            "game_name": f"{game_name}", 
-            "game_eneba_url": f"{game_url}", 
-            "game_image_url": f"{image_url}", 
+        response = requests.post("https://gamesbusca-api.onrender.com/products", json={
+            "product_name": f"{game_name}", 
+            "product_url": f"{game_url}", 
+            "product_image_url": f"{image_url}", 
             # "game_description": f"{game_description}", 
-            "game_price": game_valueFormated,
-            "game_isActive": f"{False if game_isActive else True}",
-            "game_categories": list_category,
-            "game_country": f"{game_country}"
+            "product_price": game_valueFormated,
+            "product_isActive": f"{False if game_isActive else True}",
+            "product_gender": list_category,
+            "product_country": f"{game_country}",
+            "product_type": "Jogo",
+            "plataform_name": plataform_name
         })
 
         print("item enviado")
