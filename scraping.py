@@ -68,7 +68,8 @@ for i in range(1, end_page + 1):
             else: 
                 category_game = "Nenhuma"    
             list_category.append(category_game)
-
+        
+        print(game_plataform)
         for plataform in game_plataform:
             plataformName = plataform.text
 
