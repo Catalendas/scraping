@@ -70,14 +70,19 @@ for i in range(1, end_page + 1):
             list_category.append(category_game)
 
         for plataform in game_plataform:
+            plataformName = plataform.text
+
+            if not plataformName:
+                plataform.text = "Xbox"
+
             plataform_name.append(plataform.text)
 
         # Format game_value
-        print(f"Valor do jogo: {game_value}")
-        print(f"Valor formatado: {game_valueFormated}")
+        # print(f"Valor do jogo: {game_value}")
+        # print(f"Valor formatado: {game_valueFormated}")
 
         # Post to api
-        response = requests.post("https://gamesbusca-api.onrender.com/products", json={
+        response = requests.post("http://localhost:3000/products", json={
             "product_name": f"{game_name}", 
             "product_url": f"{game_url}", 
             "product_image_url": f"{image_url}", 
