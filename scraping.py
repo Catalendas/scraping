@@ -70,11 +70,12 @@ for i in range(1, end_page + 1):
             list_category.append(category_game)
         
         palavras_proibidas = ["PlayStation 3", "Linux"]
-
-        if game_plataform === None:
-            continue
-        
         print(game_plataform)
+
+        if game_plataform == None:
+            continue
+
+       
         for plataform in game_plataform:
             plataformName = plataform.text
 
