@@ -54,7 +54,7 @@ for i in range(1, end_page + 1):
         gameSoup = BeautifulSoup(game.content, "html.parser")
         # game_description = gameSoup.find("div", class_=re.compile('Wz6WhX'))
         game_category = gameSoup.find_all("li", class_=re.compile('Akwlh_'))
-        game_plataform = gameSoup.find("ul", class_=re.compile('oBo9oN'))
+        game_plataform = gameSoup.find_all("ul", class_=re.compile('oBo9oN'))
         # print(f"pais do jogo: {game_country}")
         # print(f"Jogo está ativo?: {game_isActive}")
         list_category = []
@@ -69,14 +69,18 @@ for i in range(1, end_page + 1):
                 category_game = "Nenhuma"    
             list_category.append(category_game)
         
+        palavras_proibidas = ["PlayStation 3", "Linux"]
+
+        if game_plataform === None:
+            continue
+        
         print(game_plataform)
         for plataform in game_plataform:
             plataformName = plataform.text
 
-            if not plataformName:
-                plataform.text = "Xbox"
-
-            plataform_name.append(plataform.text)
+            if plataformName and not any(palavra in plataformName for palavra in palavras_proibidas):
+                
+                plataform_name.append(plataform.text)
 
         # Format game_value
         # print(f"Valor do jogo: {game_value}")
