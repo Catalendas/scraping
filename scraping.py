@@ -42,7 +42,7 @@ for i in range(1, end_page + 1):
             game_value = '0'
         game_isActive = produto.find('span', class_=re.compile('kq4D4Y'))
         game_country = produto.find("div", class_=re.compile('Pm6lW1')).get_text().strip()
-        print(f"nome do jogo: {game_name}")
+        # print(f"nome do jogo: {game_name}")
 
         # Format value
         game_valueNumber = re.findall(r'\d', game_value)
@@ -54,7 +54,7 @@ for i in range(1, end_page + 1):
         gameSoup = BeautifulSoup(game.content, "html.parser")
         # game_description = gameSoup.find("div", class_=re.compile('Wz6WhX'))
         game_category = gameSoup.find_all("li", class_=re.compile('Akwlh_'))
-        game_plataform = gameSoup.find_all("ul", class_=re.compile('oBo9oN'))
+        game_plataform = gameSoup.find("ul", class_=re.compile('oBo9oN'))
         # print(f"pais do jogo: {game_country}")
         # print(f"Jogo está ativo?: {game_isActive}")
         list_category = []
@@ -70,15 +70,15 @@ for i in range(1, end_page + 1):
             list_category.append(category_game)
         
         palavras_proibidas = ["PlayStation 3", "Linux"]
-        print(game_plataform)
+        # print(game_plataform)
 
         if game_plataform == None:
             continue
 
-       
+        print(game_plataform)
         for plataform in game_plataform:
             plataformName = plataform.text
-
+            print(plataformName)
             if plataformName and not any(palavra in plataformName for palavra in palavras_proibidas):
                 
                 plataform_name.append(plataform.text)
