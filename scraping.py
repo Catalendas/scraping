@@ -22,8 +22,6 @@ qtd_itens = soup.find('span', class_='n1DQi7').get_text().strip()
 
 end_page = math.ceil(int(qtd_itens) / 20)
 
-dict_games = {"name": [], "preco": []}
-
 for i in range(1, end_page + 1):
     url_page = f'https://www.eneba.com/br/store/all?drms[]=xbox&page={i}&regions[]=argentina&regions[]=turkey&regions[]=middle_east&types[]=game&types[]=subscription'
     site = requests.get(url_page, headers=headers)
@@ -33,8 +31,12 @@ for i in range(1, end_page + 1):
     for produto in produtos:
         # Get game_name, image_url, game_url, game_value
         game_name = produto.find('span', class_=re.compile('YLosEL')).get_text().strip()
-        print(produto.find('img', class_=re.compile('v5wuNi')))
-        image_url = produto.find('img', class_=re.compile('v5wuNi'))["src"]
+
+        image_url = ''
+
+        if produto.find('img', class_=re.compile('v5wuNi'))["src"]:
+            image_url = produto.find('img', class_=re.compile('v5wuNi'))["src"]
+
         game_url = produto.find('a', class_=re.compile('oSVLlh'))["href"]
         game_value_search = produto.find('span', class_=re.compile('L5ErLT'))
         if game_value_search:
