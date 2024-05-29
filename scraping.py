@@ -33,6 +33,7 @@ for i in range(1, end_page + 1):
     for produto in produtos:
         # Get game_name, image_url, game_url, game_value
         game_name = produto.find('span', class_=re.compile('YLosEL')).get_text().strip()
+        print(produto.find('img', class_=re.compile('v5wuNi')))
         image_url = produto.find('img', class_=re.compile('v5wuNi'))["src"]
         game_url = produto.find('a', class_=re.compile('oSVLlh'))["href"]
         game_value_search = produto.find('span', class_=re.compile('L5ErLT'))
@@ -75,10 +76,8 @@ for i in range(1, end_page + 1):
         if game_plataform == None:
             continue
 
-        print(game_plataform)
         for plataform in game_plataform:
             plataformName = plataform.text
-            print(plataformName)
             if plataformName and not any(palavra in plataformName for palavra in palavras_proibidas):
                 
                 plataform_name.append(plataform.text)
@@ -88,7 +87,7 @@ for i in range(1, end_page + 1):
         # print(f"Valor formatado: {game_valueFormated}")
 
         # Post to api
-        response = requests.post("https://gamesbusca-api.onrender.com/products", json={
+        response = requests.post("http://localhost:3333/products", json={
             "product_name": f"{game_name}", 
             "product_url": f"{game_url}", 
             "product_image_url": f"{image_url}", 
