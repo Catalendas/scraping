@@ -32,10 +32,11 @@ for i in range(1, end_page + 1):
         # Get game_name, image_url, game_url, game_value
         game_name = produto.find('span', class_=re.compile('YLosEL')).get_text().strip()
 
+        product_image = produto.find('img', class_=re.compile('v5wuNi'))
         image_url = ''
 
-        if produto.find('img', class_=re.compile('v5wuNi'))["src"]:
-            image_url = produto.find('img', class_=re.compile('v5wuNi'))["src"]
+        if product_image:
+            image_url = product_image.get("src")
 
         game_url = produto.find('a', class_=re.compile('oSVLlh'))["href"]
         game_value_search = produto.find('span', class_=re.compile('L5ErLT'))
