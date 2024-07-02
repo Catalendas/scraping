@@ -35,6 +35,7 @@ for i in range(1, end_page + 1):
         product_image = produto.find('img', class_=re.compile('v5wuNi'))
         image_url = ''
 
+# 
         if product_image:
             image_url = product_image.get("src")
 
