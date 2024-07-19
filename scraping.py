@@ -1,7 +1,5 @@
-import sqlite3
 import requests
 import time
-
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
