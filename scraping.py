@@ -2,7 +2,6 @@ import requests
 import time
 from bs4 import BeautifulSoup
 import re
-import pandas as pd
 import math
 
 url = 'https://www.eneba.com/br/store/xbox-games?drms[]=xbox&page=1&regions[]=turkey&regions[]=argentina&types[]=game'
