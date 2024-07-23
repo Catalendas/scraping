@@ -93,7 +93,7 @@ for i in range(1, end_page + 1):
         # print(f"Valor formatado: {game_valueFormated}")
 
         # Post to api
-        response = requests.post("http://localhost:3333/products", json={
+        response = requests.post("https://gamesbusca-api.onrender.com/products", json={
             "product_name": f"{game_name}", 
             "product_url": f"{game_url}", 
             "product_image_url": f"{image_url}", 
