@@ -20,6 +20,7 @@ end_page = math.ceil(int(qtd_itens) / 20)
 print(qtd_itens)
 
 for i in range(1, end_page + 1):
+    time.sleep(5)
     print(i) 
     url_page = f'https://www.eneba.com/br/store/xbox-games?drms[]=xbox&page={i}&regions[]=turkey&regions[]=argentina&types[]=game'
     site = requests.get(url_page, headers=headers)
@@ -53,56 +54,56 @@ for i in range(1, end_page + 1):
         game_valueComplet = ''.join(game_valueNumber)
         game_valueFormated = float(game_valueComplet) / 100
 
-        time.sleep(5)
+        # time.sleep(5)
 
         # Get game description
-        game = requests.get(f"https://www.eneba.com{game_url}", headers=headers)
-        gameSoup = BeautifulSoup(game.content, "html.parser")
-        # game_description = gameSoup.find("div", class_=re.compile('Wz6WhX'))
-        game_category = gameSoup.find_all("li", class_=re.compile('Akwlh_'))
-        game_plataform = gameSoup.find("ul", class_=re.compile('oBo9oN'))
-        # print(f"pais do jogo: {game_country}")
-        # print(f"Jogo está ativo?: {game_isActive}")
-        list_category = []
-        plataform_name = []
+        # game = requests.get(f"https://www.eneba.com{game_url}", headers=headers)
+        # gameSoup = BeautifulSoup(game.content, "html.parser")
+        # # game_description = gameSoup.find("div", class_=re.compile('Wz6WhX'))
+        # game_category = gameSoup.find_all("li", class_=re.compile('Akwlh_'))
+        # game_plataform = gameSoup.find("ul", class_=re.compile('oBo9oN'))
+        # # print(f"pais do jogo: {game_country}")
+        # # print(f"Jogo está ativo?: {game_isActive}")
+        # list_category = []
+        # plataform_name = []
 
-        for category in game_category:
-            item = category.find('a', class_=re.compile('BGWKEB'))
+        # for category in game_category:
+        #     item = category.find('a', class_=re.compile('BGWKEB'))
 
-            if item:
-                category_game = item.text
-            else: 
-                category_game = "Nenhuma"    
-            list_category.append(category_game)
+        #     if item:
+        #         category_game = item.text
+        #     else: 
+        #         category_game = "Nenhuma"    
+        #     list_category.append(category_game)
         
-        palavras_proibidas = ["PlayStation 3", "Linux"]
-        # print(game_plataform)
+        # palavras_proibidas = ["PlayStation 3", "Linux"]
+        # # print(game_plataform)
 
-        if game_plataform == None:
-            continue
+        # if game_plataform == None:
+        #     continue
 
-        for plataform in game_plataform:
-            plataformName = plataform.text
-            if plataformName and not any(palavra in plataformName for palavra in palavras_proibidas):
+        # for plataform in game_plataform:
+        #     plataformName = plataform.text
+        #     if plataformName and not any(palavra in plataformName for palavra in palavras_proibidas):
                 
-                plataform_name.append(plataform.text)
+        #         plataform_name.append(plataform.text)
 
         # Format game_value
         # print(f"Valor do jogo: {game_value}")
         # print(f"Valor formatado: {game_valueFormated}")
 
         # Post to api
-        response = requests.post("https://gamesbusca-api.onrender.com/products", json={
+        response = requests.post("http://localhost:3333/products", json={
             "product_name": f"{game_name}", 
             "product_url": f"{game_url}", 
             "product_image_url": f"{image_url}", 
             # "game_description": f"{game_description}", 
             "product_price": game_valueFormated,
             "product_isActive": f"{False if game_isActive else True}",
-            "product_gender": list_category,
+            # "product_gender": list_category,
             "product_country": f"{game_country}",
             "product_type": "Jogo",
-            "plataform_name": plataform_name
+            # "plataform_name": plataform_name
         })
 
         print("item enviado")
